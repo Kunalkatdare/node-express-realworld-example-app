@@ -24,7 +24,7 @@ jobs:
       - image: cimg/aws:2023.06
     steps:
       - aws-cli/setup:
-          role-arn: "arn:aws:iam::682010357027:role/circleci-oidc"
+          role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
       - aws-ecr/ecr_login:
           account_id: "${AWS_ACCOUNT_ID}"
 workflows: 
