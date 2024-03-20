@@ -34,10 +34,10 @@ jobs:
             ls -lart
             # sudo systemctl start docker
       - aws-ecr/create_repo:
-          account_id: "${AWS_ACCOUNT_ID}"
-          auth:
-            - aws-cli/setup:
-                role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+          # account_id: "${AWS_ACCOUNT_ID}"
+          # auth:
+          #   - aws-cli/setup:
+          #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
           repo: "node-express"
       - aws-ecr/build_and_push_image:
           # account_id: "${AWS_ACCOUNT_ID}"
