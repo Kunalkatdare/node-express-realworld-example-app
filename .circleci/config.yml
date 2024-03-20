@@ -5,7 +5,7 @@ orbs:
 jobs:
   checkout_and_test:
     docker:
-      - image: cimg/base:2022.06
+      - image: cimg/node:lts
 
     working_directory: ~/repo
 
