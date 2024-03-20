@@ -38,7 +38,7 @@ jobs:
           # auth:
           #   - aws-cli/setup:
           #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
-          repo: "MyECRRepo"
+          repo: "node-express"
 workflows: 
   version: 2
   build_and_push:
