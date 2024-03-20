@@ -11,14 +11,20 @@ ENV PORT=3000
 
 WORKDIR /app
 
-RUN addgroup --system api && \
-          adduser --system -G api api
+# RUN addgroup --system api && \
+#           adduser --system -G api api
+COPY package.json package-lock.json ./
+RUN npm install && npm install -g prisma
+COPY . .
+# Generate Prisma client
+COPY src/prisma /app/prisma
+COPY src/prisma /src/prisma
+RUN npx prisma generate && \
+    npx prisma migrate deploy
+# RUN chown -R api:api .
 
-COPY dist/api api
-RUN chown -R api:api .
+RUN npm audit fix
+# Generate Prisma client
+# RUN npx prisma db seed
 
-# You can remove this install step if you build with `--bundle` option.
-# The bundled output will include external dependencies.
-RUN npm --prefix api --omit=dev -f install
-
-CMD [ "node", "api" ]
+CMD [ "npx", "nx", "serve", "api" ]

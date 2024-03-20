@@ -9,14 +9,13 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
       - persist_to_workspace:
           root: .
           paths:
             - . # Persist everything in the workspace
-      # Install dependencies
-      - run:
-          name: Install dependencies
-          command: npm install
       # Run unit tests and allow 80% success
       - run:
           name: Run unit tests
