@@ -20,6 +20,7 @@ jobs:
   ecr-push:
     environment:
       AWS_ACCOUNT_ID: "682010357027"
+      AWS_DEFAULT_REGION: "us-east-1"
     docker:
       - image: cimg/aws:2023.06
     steps:
