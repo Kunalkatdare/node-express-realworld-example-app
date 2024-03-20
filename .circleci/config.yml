@@ -50,11 +50,13 @@ jobs:
           command: |
             # Tag the Docker image
             TAG=0.1.$CIRCLE_BUILD_NUM
+            ls -lart
             docker build -t node-express/node-express:$TAG .
             # Log in to AWS ECR
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 682010357027.dkr.ecr.us-east-1.amazonaws.com
             # Push the Docker image to AWS ECR
             docker tag node-express/node-express:$TAG 682010357027.dkr.ecr.us-east-1.amazonaws.com/node-express:$TAG
+            docker push 682010357027.dkr.ecr.us-east-1.amazonaws.com/node-express:$TAG
       # - aws-ecr/build_and_push_image:
       #     account_id: "${AWS_ACCOUNT_ID}"
       #     repo: "node-express"
