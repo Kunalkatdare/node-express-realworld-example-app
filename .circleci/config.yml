@@ -40,12 +40,12 @@ jobs:
                 role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
           repo: "node-express"
       - aws-ecr/build_and_push_image:
-          account_id: "${AWS_ACCOUNT_ID}"
+          # account_id: "${AWS_ACCOUNT_ID}"
           repo: "node-express"
           platform: "linux/amd64"
-          auth:
-            - aws-cli/setup:
-                role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+          # auth:
+          #   - aws-cli/setup:
+          #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
         
 workflows: 
   version: 2
