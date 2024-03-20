@@ -39,6 +39,8 @@ jobs:
           #   - aws-cli/setup:
           #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
           repo: "node-express"
+      - setup_remote_docker:
+          docker_layer_caching: true
       - aws-ecr/build_and_push_image:
           account_id: "${AWS_ACCOUNT_ID}"
           repo: "node-express"
