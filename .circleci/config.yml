@@ -30,7 +30,7 @@ jobs:
           name: Execute custom AWS CLI commands
           command: |
             # Your custom AWS CLI commands or Bash script here
-            aws s3 ls
+            aws s3 ls --region us-east-1
             aws ec2 describe-instances
       # - aws-ecr/build_and_push_image:
       #     account_id: "${AWS_ACCOUNT_ID}"
