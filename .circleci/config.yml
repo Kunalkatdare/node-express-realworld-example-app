@@ -22,7 +22,7 @@ jobs:
       AWS_ACCOUNT_ID: "682010357027"
       AWS_DEFAULT_REGION: "us-east-1"
     docker:
-      - image: cimg/aws:2024.03.1
+      - image: cimg/aws:2023.12.1
     steps:
       - aws-cli/setup:
           role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
@@ -32,7 +32,7 @@ jobs:
             # Your custom AWS CLI commands or Bash script here
             aws s3 ls --region us-east-1
             aws ec2 describe-instances
-            sudo systemctl start docker
+            # sudo systemctl start docker
       - aws-ecr/create_repo:
           # account_id: "${AWS_ACCOUNT_ID}"
           # auth:
