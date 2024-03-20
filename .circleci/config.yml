@@ -33,11 +33,11 @@ jobs:
             aws s3 ls --region us-east-1
             aws ec2 describe-instances
             sudo systemctl start docker
-      - aws-ecr/build_and_push_image:
-          account_id: "${AWS_ACCOUNT_ID}"
-          auth:
-            - aws-cli/setup:
-                role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+      - aws-ecr/create_repo:
+          # account_id: "${AWS_ACCOUNT_ID}"
+          # auth:
+          #   - aws-cli/setup:
+          #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
           repo: "MyECRRepo"
 workflows: 
   version: 2
