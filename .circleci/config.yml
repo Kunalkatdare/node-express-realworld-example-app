@@ -40,7 +40,7 @@ jobs:
       #       # sudo systemctl start docker
       - run:
           name: Example Command Using Cloned Repo
-          command: ls /tmp/workspace
+          command: cd /tmp/workspace
       - aws-ecr/create_repo:
           repo: "node-express"
       - setup_remote_docker:
