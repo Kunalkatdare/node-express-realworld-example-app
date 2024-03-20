@@ -3,12 +3,13 @@ orbs:
   aws-cli: circleci/aws-cli@4.0
   aws-ecr: circleci/aws-ecr@9.0.4
 jobs:
-  checkout_and_test:
+  checkout_test:
     docker:
       - image: cimg/node:lts
-
+    environment:
+      AWS_REGION: us-east-1
+      AWS_ACCOUNT_ID: 682010357027
     working_directory: ~/repo
-
     steps:
       - checkout
       # Install dependencies
@@ -19,6 +20,11 @@ jobs:
       - run:
           name: Run unit tests
           command: npm test || exit 0
+      - aws-cli/setup:
+          role-arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+          aws-region: "us-east-1"
+      - aws-ecr/ecr_login:
+          account_id: ${AWS_ACCOUNT_ID}
       # Build Docker image
       # - setup_remote_docker:
       #     docker_layer_caching: true
@@ -35,6 +41,6 @@ jobs:
       #       docker build -t api .
 workflows: 
   version: 2
-  checkout_and_test:
+  checkout_test:
     jobs:
-      - checkout_and_test
+      - checkout_test
