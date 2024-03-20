@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@4.1.3
-  aws-ecr: circleci/aws-ecr@9.0.4
+  aws-ecr: circleci/aws-ecr@9.0.0
 jobs:
   build:
     docker:
@@ -25,13 +25,8 @@ jobs:
     steps:
       - aws-cli/setup:
           role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
-      # - aws-ecr/build_and_push_image:
-      #     account_id: ${AWS_ACCOUNT_ID}
-      #     auth:
-      #       - aws-cli/setup:
-      #           role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
-      #     create_repo: true
-      #     repo: myECRRepository
+      - aws-ecr/create_repo:
+          repo: "MyECRRepp"
 workflows: 
   version: 2
   build_and_push:
