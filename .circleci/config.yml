@@ -29,7 +29,6 @@ jobs:
           account_id: ${AWS_ACCOUNT_ID}
           auth:
             - aws-cli/setup:
-                profile: ecr-push
                 role_arn: arn:aws:iam::682010357027:role/circleci-oidc
           create_repo: true
           repo: myECRRepository
