@@ -20,9 +20,9 @@ COPY . .
 COPY src/prisma /app/prisma
 COPY src/prisma /src/prisma
 RUN npx prisma generate && npx prisma migrate deploy
-# ENV DATABASE_URL=postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb
-# ENV JWT_SECRET=clBFAKBoZ4Zzrb1fRkOGhNS1JSM7gPx/jEoGVW27OFk=
-# ENV NODE_ENV=production
+ENV DATABASE_URL=postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb
+ENV JWT_SECRET=clBFAKBoZ4Zzrb1fRkOGhNS1JSM7gPx/jEoGVW27OFk=
+ENV NODE_ENV=production
 # RUN chown -R api:api .
 
 RUN npm audit fix

@@ -24,6 +24,9 @@ jobs:
     environment:
       AWS_ACCOUNT_ID: "682010357027"
       AWS_DEFAULT_REGION: "us-east-1"
+      DATABASE_URL: "postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb"
+      JWT_SECRET: "clBFAKBoZ4Zzrb1fRkOGhNS1JSM7gPx/jEoGVW27OFk="
+      NODE_ENV: "production"
     docker:
       - image: cimg/aws:2023.12.1
     steps:
