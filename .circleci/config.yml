@@ -9,6 +9,10 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - persist_to_workspace:
+          root: .
+          paths:
+            - . # Persist everything in the workspace
       # Install dependencies
       - run:
           name: Install dependencies
@@ -23,22 +27,22 @@ jobs:
       AWS_DEFAULT_REGION: "us-east-1"
     docker:
       - image: cimg/aws:2023.12.1
-    working_directory: ~/repo
     steps:
       - aws-cli/setup:
           role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+      - attach_workspace:
+          at: /tmp/workspace
+      # - run:
+      #     name: Execute custom AWS CLI commands
+      #     command: |
+      #       # Your custom AWS CLI commands or Bash script here
+      #       aws s3 ls --region us-east-1
+      #       ls -lart
+      #       # sudo systemctl start docker
       - run:
-          name: Execute custom AWS CLI commands
-          command: |
-            # Your custom AWS CLI commands or Bash script here
-            aws s3 ls --region us-east-1
-            ls -lart
-            # sudo systemctl start docker
+          name: Example Command Using Cloned Repo
+          command: ls /tmp/workspace
       - aws-ecr/create_repo:
-          # account_id: "${AWS_ACCOUNT_ID}"
-          # auth:
-          #   - aws-cli/setup:
-          #       role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
           repo: "node-express"
       - setup_remote_docker:
           docker_layer_caching: true
