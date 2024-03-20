@@ -23,6 +23,7 @@ jobs:
       AWS_DEFAULT_REGION: "us-east-1"
     docker:
       - image: cimg/aws:2023.12.1
+    working_directory: ~/repo
     steps:
       - aws-cli/setup:
           role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
