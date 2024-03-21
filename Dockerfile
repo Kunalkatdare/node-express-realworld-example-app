@@ -16,7 +16,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install && npm install -g prisma
 COPY . .
-# # Generate Prisma client
+# # Generate Prisma client 
 COPY src/prisma /app/prisma
 COPY src/prisma /src/prisma
 # ENV DATABASE_URL=postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb
