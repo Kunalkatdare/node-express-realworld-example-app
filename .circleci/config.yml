@@ -21,6 +21,9 @@ jobs:
           name: Run unit tests
           command: npm test || exit 0
   ecr-push:
+    environment:
+      AWS_ACCOUNT_ID: "682010357027"
+      AWS_DEFAULT_REGION: "us-east-1"
     docker:
       - image: cimg/aws:2023.12.1
     steps:
@@ -38,6 +41,7 @@ jobs:
             cd /tmp/workspace
             chmod +x .circleci/export_env_vars.sh           
             .circleci/export_env_vars.sh
+            cat .env
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t node-express/node-express:$TAG .
             # Log in to AWS ECR
