@@ -51,14 +51,6 @@ jobs:
             docker tag ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG
             docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG
             rm -f .env
-  deploy:
-    docker:
-      - image: cimg/aws:2023.12.1  
-    steps:
-      - aws-ecs/deploy-service-update: 
-          family: 'proxima-master-service'
-          cluster: 'dev-cluster'
-          container-image-name-updates: 'container=proxima-master-service,tag=0.1.${CIRCLE_BUILD_NUM}' 
         
 workflows: 
   version: 2
@@ -68,4 +60,7 @@ workflows:
       - ecr-push:
           requires:
             - build
-      - deploy
+      - aws-ecs/deploy-service-update: 
+          family: 'proxima-master-service'
+          cluster: 'dev-cluster'
+          container-image-name-updates: 'container=proxima-master-service,tag=0.1.${CIRCLE_BUILD_NUM}' 
