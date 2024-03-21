@@ -71,9 +71,9 @@ workflows:
                   role_session_name: 'ecs-session'
           family: 'proxima-master-service'
           cluster: 'dev-cluster'
-          container_image_name_updates: 'container=proxima-master-service,tag=0.1.${CIRCLE_BUILD_NUM}'
+          container_image_name_updates: 'container=proxima-master-container,tag=0.1.${CIRCLE_BUILD_NUM}'
       # - aws-ecs/deploy_service_update:
-      #     auth:
+      #     auth: 
       #         - aws-cli/setup:
       #             role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
       #     family: 'proxima-master-service'
