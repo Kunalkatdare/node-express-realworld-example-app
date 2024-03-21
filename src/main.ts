@@ -26,6 +26,8 @@ app.get('/', (req: express.Request, res: express.Response) => {
 app.get('/', (req: express.Request, res: express.Response) => {
   res.sendStatus(200); // Respond with HTTP status code 200 indicating the service is healthy
 });
+// Print DATABASE_URL from environment variables
+console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`);
 
 /* eslint-disable */
 app.use(
