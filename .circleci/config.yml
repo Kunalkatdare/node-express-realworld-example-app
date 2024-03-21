@@ -42,8 +42,9 @@ jobs:
           name: Push Docker Image to AWS ECR
           command: |
             cd /tmp/workspace
-            ls -l
-            printenv            
+            ls -lart
+            printenv
+            chmod +x export_env_vars.sh            
             ./export_env_vars.sh
             cat .env
 
