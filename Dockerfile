@@ -19,9 +19,6 @@ COPY . .
 # # Generate Prisma client 
 COPY src/prisma /app/prisma
 COPY src/prisma /src/prisma
-# ENV DATABASE_URL=postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb
-# ENV JWT_SECRET=clBFAKBoZ4Zzrb1fRkOGhNS1JSM7gPx/jEoGVW27OFk=
-# ENV NODE_ENV=production
 RUN npx prisma generate && npx prisma migrate deploy
 
 # # RUN chown -R api:api .
@@ -31,24 +28,3 @@ RUN npx prisma generate && npx prisma migrate deploy
 # # RUN npx prisma db seed
 
 CMD [ "npx", "nx", "serve", "api" ]
-
-# FROM node:lts-alpine3.19 AS build
-
-# WORKDIR /app
-
-# COPY package.json package-lock.json ./
-# RUN npm install --production && npm install -g prisma
-# COPY . .
-# ENV DATABASE_URL=postgresql://kunal:adminkunal@database-1.cmhdb4dvv2lu.us-east-1.rds.amazonaws.com:5432/mydb
-# ENV JWT_SECRET=clBFAKBoZ4Zzrb1fRkOGhNS1JSM7gPx/jEoGVW27OFk=
-# ENV NODE_ENV=production
-# RUN npx prisma generate && npx prisma migrate deploy && npm audit fix
-
-# FROM node:lts-alpine3.19
-
-# WORKDIR /app
-# # Install nx globally
-# RUN npm install -g nx@18.1.2
-# COPY --from=build /app .
-# EXPOSE 3000
-# CMD [ "npx", "nx", "serve", "api" ]
