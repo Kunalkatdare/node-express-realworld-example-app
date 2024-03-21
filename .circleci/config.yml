@@ -44,8 +44,10 @@ jobs:
             # Tag the Docker image
             cd /tmp/workspace; ls -l; printenv;
             cat <<EOF > .env
+            DB_URL=${DB_URL}
+            JWT_SECRET=${JWT_SECRET}
+            NODE_ENV=${JWT_SECRET}
             EOF
-
             while IFS='=' read -r name value; do
               echo "$name=${!name}" >> .env
             done < <(env | grep -E "^DB_URL=|^JWT_SECRET=|^NODE_ENV=")
