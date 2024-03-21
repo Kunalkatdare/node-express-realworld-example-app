@@ -44,7 +44,7 @@ jobs:
             cd /tmp/workspace
             ls -lart
             printenv
-            chmod +x export_env_vars.sh            
+            chmod +x ./circleci/export_env_vars.sh           
             ./circleci/export_env_vars.sh
             cat .env
 
