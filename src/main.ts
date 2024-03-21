@@ -22,6 +22,11 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.json({ status: 'API is running on /api' });
 });
 
+// Health check endpoint
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.sendStatus(200); // Respond with HTTP status code 200 indicating the service is healthy
+});
+
 /* eslint-disable */
 app.use(
   (
