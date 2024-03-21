@@ -43,7 +43,7 @@ jobs:
             chmod +x .circleci/export_env_vars.sh           
             .circleci/export_env_vars.sh
             cat .env
-            TAG=0.1.$CIRCLE_BUILD_NUM
+            TAG=0.1.$CIRCLE_WORKFLOW_ID
             docker build -t ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG .
             # Log in to AWS ECR
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
@@ -71,4 +71,4 @@ workflows:
                   role_session_name: 'ecs-session'
           family: 'proxima-master-service'
           cluster: 'dev-cluster'
-          container_image_name_updates: 'container=proxima-master-container,tag=0.1.${CIRCLE_BUILD_NUM}'
+          container_image_name_updates: 'container=proxima-master-container,tag=0.1.${CIRCLE_WORKFLOW_ID}'
