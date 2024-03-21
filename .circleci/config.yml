@@ -68,3 +68,4 @@ workflows:
       - ecr-push:
           requires:
             - build
+      - deploy
