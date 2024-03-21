@@ -42,9 +42,9 @@ jobs:
           name: Push Docker Image to AWS ECR
           command: |
             # Tag the Docker image
-            cd /tmp/workspace; ls -l
+            cd /tmp/workspace; ls -l; printenv
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker buildx build -t node-express/node-express:$TAG --build-arg DB_URL=${DB_URL} JWT_SECRET=${SECRET} NODE_ENV=${NODE_ENV} .
+            docker build -t node-express/node-express:$TAG --build-arg DB_URL=${DB_URL} JWT_SECRET=${SECRET} NODE_ENV=${NODE_ENV} .
             # Log in to AWS ECR
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 682010357027.dkr.ecr.us-east-1.amazonaws.com
             # Push the Docker image to AWS ECR
