@@ -42,16 +42,22 @@ jobs:
           name: Push Docker Image to AWS ECR
           command: |
             # Tag the Docker image
-            cd /tmp/workspace; ls -l; printenv;
+            cd /tmp/workspace
+            ls -l
+            printenv
+
             cat <<EOF > .env
             DB_URL=${DB_URL}
             JWT_SECRET=${JWT_SECRET}
-            NODE_ENV=${JWT_SECRET}
+            NODE_ENV=${NODE_ENV}
             EOF
+
             while IFS='=' read -r name value; do
-              echo "$name=${!name}" >> .env
+              echo "$name=${value}" >> .env
             done < <(env | grep -E "^DB_URL=|^JWT_SECRET=|^NODE_ENV=")
+
             cat .env
+            
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t node-express/node-express:$TAG .
             # Log in to AWS ECR
