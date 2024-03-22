@@ -88,7 +88,6 @@ workflows:
           name: approval-gate-qa
           requires:
             - deploy-dev
-            - ecr_docker_push
       - aws-ecs/deploy_service_update:
           name: deploy-qa
           requires:
