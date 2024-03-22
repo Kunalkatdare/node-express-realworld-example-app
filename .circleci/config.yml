@@ -55,21 +55,27 @@ jobs:
 
 
 
+
 workflows:
-  build_and_push:
+  deployment:
     jobs:
       - build
       - ecr_docker_push:
           requires:
             - build
-      - aws-ecs/deploy_service_update:
+      - deploy-dev:
           requires:
             - ecr_docker_push
-          auth:
-              - aws-cli/setup:
-                  role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
-                  role_session_name: 'ecs-session'
-          family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-service'
-          cluster: 'dev-cluster'
-          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-container,tag=0.1.${CIRCLE_SHA1}'
-          verify_revision_is_deployed: true
+          name: Deploy to ECS
+          jobs:
+          - aws-ecs/deploy_service_update:
+              requires:
+                - ecr_docker_push
+              auth:
+                  - aws-cli/setup:
+                      role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
+                      role_session_name: 'ecs-session'
+              family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-service'
+              cluster: 'dev-cluster'
+              container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-container,tag=0.1.${CIRCLE_SHA1}'
+              verify_revision_is_deployed: true
