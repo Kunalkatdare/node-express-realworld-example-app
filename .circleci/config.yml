@@ -94,7 +94,7 @@ workflows:
             - approval-gate-qa
           auth:
               - aws-cli/setup:
-                  role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
+                  role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
                   role_session_name: 'ecs-session'
           family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-qa-service'
           cluster: 'qa-cluster'
@@ -105,4 +105,32 @@ workflows:
           name: approval-gate-stage
           requires:
             - deploy-qa
-        
+      - aws-ecs/deploy_service_update:
+          name: deploy-stage
+          requires:
+            - approval-gate-stage
+          auth:
+              - aws-cli/setup:
+                  role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+                  role_session_name: 'ecs-session'
+          family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-stage-service'
+          cluster: 'stage-cluster'
+          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-stage-container,tag=${CIRCLE_SHA1}'
+          verify_revision_is_deployed: true
+      - hold:
+          type: approval
+          name: approval-gate-prod
+          requires:
+            - deploy-stage
+      - aws-ecs/deploy_service_update:
+          name: deploy-prod
+          requires:
+            - approval-gate-prod
+          auth:
+              - aws-cli/setup:
+                  role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
+                  role_session_name: 'ecs-session'
+          family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-prod-service'
+          cluster: 'prod-cluster'
+          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-prod-container,tag=${CIRCLE_SHA1}'
+          verify_revision_is_deployed: true
