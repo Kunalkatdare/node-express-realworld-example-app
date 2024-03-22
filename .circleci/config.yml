@@ -24,8 +24,8 @@ jobs:
       - run:
           name: Run unit tests
           command: npm test || exit 0
-      - upload:
-          token: 35436f12-2135-4420-9b32-03356cffa8bd
+      - codecov/upload
+          # token: 35436f12-2135-4420-9b32-03356cffa8bd
   ecr_docker_push:
     environment:
       AWS_ACCOUNT_ID: "682010357027"
