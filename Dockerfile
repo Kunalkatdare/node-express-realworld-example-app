@@ -4,22 +4,51 @@
 # Tip: Modify "docker-build" options in project.json to change docker build args.
 #
 # Run the container with `docker run -p 3000:3000 -t api`.
+# FROM docker.io/node:lts-alpine
+
+# WORKDIR /app
+
+# RUN addgroup --system api && adduser --system -G api api
+# COPY package.json package-lock.json ./
+# RUN npm install && npm install -g prisma
+# COPY . .
+# # # Generate Prisma client 
+# COPY src/prisma /app/prisma
+# COPY src/prisma /src/prisma
+# RUN npx prisma generate && npx prisma migrate deploy
+
+# RUN chown -R api:api .
+
+# # RUN npm audit fix
+
+# CMD [ "npx", "nx", "serve", "api" ]
+
+
 FROM docker.io/node:lts-alpine
 
+# Set working directory
 WORKDIR /app
 
-# # RUN addgroup --system api && \
-# #           adduser --system -G api api
+# Copy package.json and package-lock.json files
 COPY package.json package-lock.json ./
+
+# Install dependencies
 RUN npm install && npm install -g prisma
+
+# Copy the rest of the application files
 COPY . .
-# # Generate Prisma client 
-COPY src/prisma /app/prisma
-COPY src/prisma /src/prisma
+
+# Generate Prisma client and run migrations
 RUN npx prisma generate && npx prisma migrate deploy
 
-# # RUN chown -R api:api .
+# Change ownership of application files
+RUN chown -R node:node .
 
-# RUN npm audit fix
+# Expose port
+EXPOSE 3000
 
+# Define user
+USER node
+
+# Start the application
 CMD [ "npx", "nx", "serve", "api" ]
