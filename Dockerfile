@@ -6,9 +6,6 @@
 # Run the container with `docker run -p 3000:3000 -t api`.
 FROM docker.io/node:lts-alpine
 
-# ENV HOST=0.0.0.0
-# ENV PORT=3000
-
 WORKDIR /app
 
 # # RUN addgroup --system api && \
@@ -24,7 +21,5 @@ RUN npx prisma generate && npx prisma migrate deploy
 # # RUN chown -R api:api .
 
 # RUN npm audit fix
-# # Generate Prisma client
-# # RUN npx prisma db seed
 
 CMD [ "npx", "nx", "serve", "api" ]
