@@ -55,7 +55,6 @@ jobs:
       - snyk/scan:
           severity-threshold: high
           docker-image-name: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG
-          target-file: "Dockerfile"
           fail-on-issues: true 
 
 
