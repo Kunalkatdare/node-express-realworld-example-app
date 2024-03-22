@@ -3,7 +3,7 @@ orbs:
   aws-cli: circleci/aws-cli@4.0.0
   aws-ecr: circleci/aws-ecr@9.0.0
   aws-ecs: circleci/aws-ecs@4.0.0
-  snyk: snyk/scan@2.1.0
+  # snyk: snyk/scan@2.1.0
 jobs:
   build:
     docker:
