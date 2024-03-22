@@ -62,8 +62,6 @@ jobs:
             TAG=$CIRCLE_SHA1
             docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG
 
-
-
 workflows:
   deployment:
     jobs:
@@ -84,11 +82,24 @@ workflows:
           container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-dev-container,tag=${CIRCLE_SHA1}'
           verify_revision_is_deployed: true
       - hold:
+          filters:
+            branches:
+              only:
+                - master
+                - main
+                - feature/*
+                - develop
           type: approval
           name: approval-gate-qa
           requires:
             - deploy-dev
       - aws-ecs/deploy_service_update:
+          filters:
+            branches:
+              only:
+                - master
+                - main
+                - develop
           name: deploy-qa
           requires:
             - approval-gate-qa
@@ -101,11 +112,23 @@ workflows:
           container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-qa-container,tag=${CIRCLE_SHA1}'
           verify_revision_is_deployed: true
       - hold:
+          filters:
+            branches:
+              only:
+                - master
+                - main
+                - develop
           type: approval
           name: approval-gate-stage
           requires:
             - deploy-qa
       - aws-ecs/deploy_service_update:
+          filters:
+            branches:
+              only:
+                - master
+                - main
+                - develop
           name: deploy-stage
           requires:
             - approval-gate-stage
@@ -118,11 +141,22 @@ workflows:
           container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-stage-container,tag=${CIRCLE_SHA1}'
           verify_revision_is_deployed: true
       - hold:
+          filters:
+            branches:
+              only:
+                - master
+                - main
+                - develop
           type: approval
           name: approval-gate-prod
           requires:
             - deploy-stage
       - aws-ecs/deploy_service_update:
+          filters:
+            branches:
+              only:
+                - master
+                - main
           name: deploy-prod
           requires:
             - approval-gate-prod
