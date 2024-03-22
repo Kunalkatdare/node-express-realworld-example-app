@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Run unit tests
           command: npm test || exit 0
-  ecr-push:
+  ecr_docker_push:
     environment:
       AWS_ACCOUNT_ID: "682010357027"
       AWS_DEFAULT_REGION: "us-east-1"
@@ -59,12 +59,12 @@ workflows:
   build_and_push:
     jobs:
       - build
-      - ecr-push:
+      - ecr_docker_push:
           requires:
             - build
       - aws-ecs/deploy_service_update:
           requires:
-            - ecr-push
+            - ecr_docker_push
           auth:
               - aws-cli/setup:
                   role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
