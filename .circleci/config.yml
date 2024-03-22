@@ -84,3 +84,20 @@ workflows:
           cluster: 'dev-cluster'
           container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-dev-container,tag=${CIRCLE_SHA1}'
           verify_revision_is_deployed: true
+      - hold:
+          type: approval
+      - aws-ecs/deploy_service_update:
+          name: deploy-qa
+          requires:
+            - ecr_docker_push
+          auth:
+              - aws-cli/setup:
+                  role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
+                  role_session_name: 'ecs-session'
+          family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-qa-service'
+          cluster: 'qa-cluster'
+          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-qa-container,tag=${CIRCLE_SHA1}'
+          verify_revision_is_deployed: true
+      - hold:
+          type: approval
+        
