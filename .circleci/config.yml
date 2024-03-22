@@ -4,7 +4,6 @@ orbs:
   aws-ecr: circleci/aws-ecr@9.0.0
   aws-ecs: circleci/aws-ecs@4.0.0
   snyk: snyk/snyk@2.1.0
-  # sonarcloud: sonarsource/sonarcloud@2.0.0
 
 jobs:
   build:
@@ -88,10 +87,12 @@ workflows:
           type: approval
           requires:
             - deploy-dev
+            - ecr_docker_push
       - aws-ecs/deploy_service_update:
           name: deploy-qa
           requires:
             - ecr_docker_push
+            - deploy-dev
           auth:
               - aws-cli/setup:
                   role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
