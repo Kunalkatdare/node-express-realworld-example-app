@@ -44,7 +44,7 @@ jobs:
             chmod +x .circleci/export_env_vars.sh           
             .circleci/export_env_vars.sh
             cat .env
-            TAG=0.1.$CIRCLE_SHA1
+            TAG=$CIRCLE_SHA1
             docker build -t ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG .
             # Log in to AWS ECR
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
@@ -54,7 +54,7 @@ jobs:
             rm -f .env
       - snyk/scan:
           severity-threshold: high
-          docker-image-name: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG
+          docker-image-name: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:${CIRCLE_SHA1}
           fail-on-issues: true 
 
 
@@ -77,5 +77,5 @@ workflows:
                   role_session_name: 'ecs-session'
           family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-service'
           cluster: 'dev-cluster'
-          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-container,tag=0.1.${CIRCLE_SHA1}'
+          container_image_name_updates: 'container=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-container,tag=${CIRCLE_SHA1}'
           verify_revision_is_deployed: true
