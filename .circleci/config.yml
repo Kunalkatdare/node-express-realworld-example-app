@@ -86,6 +86,8 @@ workflows:
           verify_revision_is_deployed: true
       - hold:
           type: approval
+          requires:
+            - deploy-dev
       - aws-ecs/deploy_service_update:
           name: deploy-qa
           requires:
@@ -100,4 +102,6 @@ workflows:
           verify_revision_is_deployed: true
       - hold:
           type: approval
+          requires:
+            - deploy-qa
         
