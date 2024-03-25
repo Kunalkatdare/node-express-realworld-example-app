@@ -19,7 +19,6 @@ jobs:
           root: .
           paths:
             - .
-      # allow failing unit tests for the demo
       - run:
           name: Run unit tests
           command: npm test || exit 0  
@@ -73,7 +72,7 @@ workflows:
             - ecr_docker_push
           auth:
               - aws-cli/setup:
-                  role_arn: "arn:aws:iam::682010357027:role/circleci-oidc"
+                  role_arn: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/circleci-oidc"
                   role_session_name: 'ecs-session'
           family: '${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}-dev-service'
           cluster: 'dev-cluster'
