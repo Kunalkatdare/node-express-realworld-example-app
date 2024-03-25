@@ -44,7 +44,6 @@ jobs:
             cd /tmp/workspace
             chmod +x .circleci/export_env_vars.sh           
             .circleci/export_env_vars.sh
-            cat .env
             TAG=$CIRCLE_SHA1
             docker build -t ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG . 
             # Log in to AWS ECR
