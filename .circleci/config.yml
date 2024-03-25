@@ -22,7 +22,7 @@ jobs:
       # allow failing unit tests for the demo
       - run:
           name: Run unit tests
-          command: npm test || exit 0
+          command: npm test || exit 0  
   ecr_docker_push:
     environment:
       AWS_ACCOUNT_ID: "682010357027"
