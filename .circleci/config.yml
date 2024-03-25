@@ -46,7 +46,7 @@ jobs:
             .circleci/export_env_vars.sh
             cat .env
             TAG=$CIRCLE_SHA1
-            docker build -t ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG .
+            docker build -t ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG . 
             # Log in to AWS ECR
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
             docker tag ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}:$TAG  
